@@ -1,16 +1,22 @@
-import React from 'react'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {AppBar, InputBase, Toolbar, makeStyles, Typography, Avatar, IconButton, Drawer, List, ListItem} from '@material-ui/core'
 import headerImg from "../imgs/img1.jpeg"
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import zIndex from '@material-ui/core/styles/zIndex';
+import {Link} from "react-router-dom"
 
 
 const Header = () => {
   const [tablet, setTablet] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false)
   const classes = useStyle(); 
+
+  useEffect(()=>{
+    const responsiveness = () => window.innerWidth < 900 ? setTablet(true):setTablet(false)
+    responsiveness();
+    window.addEventListener("resize", ()=>responsiveness())
+  },[tablet])
 
   const displayTablet = () => {
     const handleDrawerOpen = () => {
@@ -39,7 +45,7 @@ const Header = () => {
             <Drawer {...{anchor:"left",open:drawerOpen, onClose:handleDrawerClose}}>
                 <div>{getDrawerChoices()}</div>
             </Drawer>
-            <img src={headerImg} className={classes.logo} alt="logo"/>
+            <Link to="/"><img src={headerImg} className={classes.logo}/></Link>
             <div className = {classes.right} >
                 <Typography>Sign in </Typography>
                 <Avatar className={classes.avatar}></Avatar>
@@ -50,10 +56,14 @@ const Header = () => {
 
   const displayDesktop = () => (
     <Toolbar className={classes.toolbar}>
-        <img src={headerImg} className={classes.logo}/>
+        <Link to="/"><img src={headerImg} className={classes.logo}/></Link>
         <div className={classes.center}>
             <InputBase fullWidth placeholder = "Search here.." inputProps={{className: classes.input}}/>
             <SearchIcon/>
+        </div>
+        <div className = {classes.right} >
+            <Typography>Sign in </Typography>
+            <Avatar className={classes.avatar}></Avatar>
         </div>
         
     </Toolbar>
