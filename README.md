@@ -5,3 +5,4 @@
 3. Enrutar Home y Search Page con react-router-dom 
 4. Header: responsive displayDesktop(), displayMobile()
 5. Header version Desktop
+6. Header version Tablet

@@ -1,16 +1,52 @@
 import React from 'react'
 import {useState} from 'react'
-import {AppBar, InputBase, Toolbar, makeStyles, Typography, Avatar} from '@material-ui/core'
+import {AppBar, InputBase, Toolbar, makeStyles, Typography, Avatar, IconButton, Drawer, List, ListItem} from '@material-ui/core'
 import headerImg from "../imgs/img1.jpeg"
 import SearchIcon from '@mui/icons-material/Search';
+import MenuIcon from '@mui/icons-material/Menu';
 import zIndex from '@material-ui/core/styles/zIndex';
 
 
 const Header = () => {
-  const displayMobile = () => {}
-  
-  const [mobile, setMobile] = useState(false);
+  const [tablet, setTablet] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const classes = useStyle(); 
+
+  const displayTablet = () => {
+    const handleDrawerOpen = () => {
+        setDrawerOpen(true)
+    }
+
+    const handleDrawerClose = () =>{
+        setDrawerOpen(false)
+    }
+
+    const headersData=["My account", "Previous bookings", "Log out"]
+    const getDrawerChoices = () =>{
+        return headersData.map((data)=>{
+            return(
+                <List>
+                    <ListItem>{data}</ListItem>
+                </List>
+            )
+        })
+    }
+    return(
+        <Toolbar className={classes.toolbar}>
+            <IconButton {...{edge:"start",color:"#ccc","aria-labnel":"menu","aria-hashpopup":"true",onClick:handleDrawerOpen}}>
+                <MenuIcon fontSize="large"/>
+            </IconButton>
+            <Drawer {...{anchor:"left",open:drawerOpen, onClose:handleDrawerClose}}>
+                <div>{getDrawerChoices()}</div>
+            </Drawer>
+            <img src={headerImg} className={classes.logo} alt="logo"/>
+            <div className = {classes.right} >
+                <Typography>Sign in </Typography>
+                <Avatar className={classes.avatar}></Avatar>
+            </div>
+        </Toolbar>
+    )
+  }
 
   const displayDesktop = () => (
     <Toolbar className={classes.toolbar}>
@@ -19,10 +55,7 @@ const Header = () => {
             <InputBase fullWidth placeholder = "Search here.." inputProps={{className: classes.input}}/>
             <SearchIcon/>
         </div>
-        <div className = {classes.right} >
-            <Typography>Sign in </Typography>
-            <Avatar className={classes.avatar}></Avatar>
-        </div>
+        
     </Toolbar>
   )
   
@@ -30,7 +63,7 @@ const Header = () => {
   return (
     <AppBar className={classes.root}>
         {
-            mobile ? displayMobile() : displayDesktop()
+            tablet ? displayTablet() : displayDesktop()
         }
 
     </AppBar>
