@@ -2,10 +2,12 @@ import { Chip, Slider, Typography, makeStyles } from '@material-ui/core'
 import mockData,{chips} from "../mockData"
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Results from "./Results"
-import { useState } from 'react';
+import {useState} from 'react';
 import {useSelector} from "react-redux"
 import {selectStart} from "../features/startSlice"
 import {selectEnd} from "../features/endSlice"
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import mockCategories from '../mockCategories'
 
 const SearchPage = () => {
     const classes = useStyle()
@@ -13,8 +15,14 @@ const SearchPage = () => {
     const start = useSelector(selectStart);
     const end = useSelector(selectEnd);
 
+
     const handleChange = (e) =>{
         setValue(e.target.value)
+    }
+
+    const [catSelected, setCatSelected]=useState(1);
+    const changeCatState= e=>{
+        setCatSelected(e.taget.value);
     }
   return (
     <div className={classes.root}>
@@ -41,9 +49,26 @@ const SearchPage = () => {
                 valueLabelDisplay="on"
             />     
         </div>
+        <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={mockCategories[0].title}
+                label="Category"
+                onChange={handleChange}
+            >
+                {
+                mockCategories
+                    .map((cat)=>{
+                        <MenuItem value={cat.id_category} checked = {catSelected==cat.id_category?true:false} onChange={changeCatState}>{cat.title}</MenuItem>
+                    })    
+                }
+            </Select>
+        </FormControl>
         {
             mockData
-                    .filter((data)=>data.cat=="room")
+                    .filter((data)=>data.category_id==catSelected)
                     .filter((data)=>data.price<=value)
                     .filter((data)=> end < data.notAvailableStart || start > data.notAvailableEnd)
                     .map(({url_image,name,description,price,availability},index)=>{
