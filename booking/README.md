@@ -7,3 +7,7 @@
 5. Header version Desktop
 6. Header version Tablet
 7. HomePage: DatePicker, Banner, Card
+8. Footer
+9. ockData
+10. SearchPage
+11. Filtrar por precios, capturar precios del slider, filtrar mockdata por menor p[precio al capturado]
