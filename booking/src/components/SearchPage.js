@@ -1,6 +1,7 @@
 import { Chip, Slider, Typography, makeStyles } from '@material-ui/core'
 import mockData,{chips} from "../mockData"
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Results from "./Results"
 
 const SearchPage = () => {
     const classes = useStyle()
@@ -21,14 +22,27 @@ const SearchPage = () => {
         </div>
         <div className={classes.selector}>
             <Typography gutterBottom>Prices</Typography>
-            <Slider value= onChange={}
+            <Slider
                 aria-labelledby='="continuos-slider'
                 min={100}
                 max={400}
                 valueLabelDisplay="auto"
-            />
-            
+            />     
         </div>
+        {
+            mockData
+                    .filter((data)=>data.cat=="room")
+                    .map(({url_image,name,description,price,availability},index)=>{
+                        <Results 
+                            key={index}
+                            url_image={url_image}
+                            name={name}
+                            description={description}
+                            price={price}
+                            availability={availability}
+                        />
+                    })
+        }
 
     </div>
   )
