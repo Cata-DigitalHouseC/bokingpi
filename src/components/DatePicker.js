@@ -39,10 +39,11 @@ const useStyle=makeStyles((theme)=>({
         position:"absolute",
         top:"17vh",
         left:"30vh",
+        zIndex: "50",
         [theme.breakpoints.down("sm")]:{
             top:"16vh",
             left:0
-        }
+        },
     },
     inputSection:{
         display:"flex",
