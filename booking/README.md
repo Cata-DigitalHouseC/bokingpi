@@ -11,3 +11,8 @@
 9. ockData
 10. SearchPage
 11. Filtrar por precios, capturar precios del slider, filtrar mockdata por menor p[precio al capturado]
+12. configurar redux
+13. capturar fecha inicial y final en datepicker, en el redux
+Datepicker => dispatch de fechas capturadas
+14. mockData cada habitacion tiene fechasd bloqueadas
+15. comparar start, end .. notvaailable... en el searchPage

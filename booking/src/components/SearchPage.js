@@ -3,13 +3,18 @@ import mockData,{chips} from "../mockData"
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Results from "./Results"
 import { useState } from 'react';
+import {useSelector} from "react-redux"
+import {selectStart} from "../features/startSlice"
+import {selectEnd} from "../features/endSlice"
 
 const SearchPage = () => {
     const classes = useStyle()
     const [value, setValue]=useState(400)
+    const start = useSelector(selectStart);
+    const end = useSelector(selectEnd);
 
-    const handleChange = (newValue) =>{
-        setValue(newValue)
+    const handleChange = (e) =>{
+        setValue(e.target.value)
     }
   return (
     <div className={classes.root}>
@@ -28,18 +33,19 @@ const SearchPage = () => {
         </div>
         <div className={classes.selector}>
             <Typography gutterBottom>Prices</Typography>
-            <Slider value={value} 
+            <Slider getAriaValueText={(e)=>e.target.value }
                 onChange={handleChange}
-                aria-labelledby='continuos-slider'
+                aria-label="Always visible"
                 min={100}
                 max={400}
-                valueLabelDisplay="auto"
+                valueLabelDisplay="on"
             />     
         </div>
         {
             mockData
                     .filter((data)=>data.cat=="room")
                     .filter((data)=>data.price<=value)
+                    .filter((data)=> end < data.notAvailableStart || start > data.notAvailableEnd)
                     .map(({url_image,name,description,price,availability},index)=>{
                         <Results 
                             key={index}

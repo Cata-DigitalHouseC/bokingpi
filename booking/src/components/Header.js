@@ -39,7 +39,7 @@ const Header = () => {
     }
     return(
         <Toolbar className={classes.toolbar}>
-            <IconButton {...{edge:"start",color:"#ccc","aria-labnel":"menu","aria-hashpopup":"true",onClick:handleDrawerOpen}}>
+            <IconButton {...{edge:"start",color:"primary","aria-label":"menu","aria-haspopup":"true",onClick:handleDrawerOpen}}>
                 <MenuIcon fontSize="large"/>
             </IconButton>
             <Drawer {...{anchor:"left",open:drawerOpen, onClose:handleDrawerClose}}>
