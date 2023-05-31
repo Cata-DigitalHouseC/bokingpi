@@ -15,7 +15,6 @@ const SearchPage = () => {
     const start = useSelector(selectStart);
     const end = useSelector(selectEnd);
 
-
     const handleChange = (e) =>{
         setValue(e.target.value)
     }
