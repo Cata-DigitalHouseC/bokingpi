@@ -18,6 +18,7 @@ const FormCategory = () => {
     <FormControl>
         <TextField required id="standard-required" label="Title" defaultValue="title...." variant="standard" onChange={(e)=>setCategory({...category,title:e.target.value})} />
         <TextField required id="standard-required" label="Description" defaultValue="description...." variant="standard"  onChange={(e)=>setCategory({...category,description:e.target.value})} />
+        
         <Button type="Submit" variant="outlined" onSubmit={handleSubmit}>Agregar Categoria</Button>
     </FormControl>
   )

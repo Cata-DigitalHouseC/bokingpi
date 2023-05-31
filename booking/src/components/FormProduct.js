@@ -2,6 +2,7 @@ import { FormControl, Modal } from '@material-ui/core'
 import React from 'react'
 import mockStates from '../mockStates'
 import mockCities from '../mockCities'
+import mockCategories  from '../mockCategories'
 
 
 const FormProduct = () => {
@@ -88,12 +89,16 @@ const FormProduct = () => {
         <FormLabel id="demo-radio-buttons-group-label">Category</FormLabel>
         <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="female"
+            defaultValue="selected"
             name="radio-buttons-group"
         >
-            <FormControlLabel value="category1" control={<Radio />} label="cat1" />
-            <FormControlLabel value="category2" control={<Radio />} label="cat2" />
-            <FormControlLabel value="category3" control={<Radio />} label="cat3" />
+            <FormControlLabel value="selected" disabled  control={<Radio />} label="None" />
+            {
+            mockCategories.map((cat)=>{
+                return <FormControlLabel value={cat.title} control={<Radio />} label={cat.title} />
+            })
+            }
+            
         </RadioGroup>
 
         <input

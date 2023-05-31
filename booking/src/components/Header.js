@@ -1,16 +1,31 @@
 import {useState, useEffect} from 'react'
-import {AppBar, InputBase, Toolbar, makeStyles, Typography, Avatar, IconButton, Drawer, List, ListItem} from '@material-ui/core'
+import {AppBar, InputBase, Toolbar, makeStyles, Typography, Avatar, IconButton, Drawer, List, ListItem, Button} from '@material-ui/core'
 import headerImg from "../imgs/img1.jpeg"
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import zIndex from '@material-ui/core/styles/zIndex';
 import {Link} from "react-router-dom"
+import {useStateValue} from "../StateProvider"
+import {useNavigate} from "rect-router-dom"
 
 
 const Header = () => {
   const [tablet, setTablet] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false)
   const classes = useStyle(); 
+  const [{user}, dispatch] = useStateValue();
+  history=useNavigate();
+
+  const handleAuth = () =>{
+    if(user){
+        auth.signOut();
+        dispatch({
+            type: actionTypes.SET_USER,
+            user: null,
+        })
+        history.push("/")
+    }
+  }
 
   useEffect(()=>{
     const responsiveness = () => window.innerWidth < 900 ? setTablet(true):setTablet(false)
@@ -47,8 +62,12 @@ const Header = () => {
             </Drawer>
             <Link to="/"><img src={headerImg} className={classes.logo}/></Link>
             <div className = {classes.right} >
-                <Typography>Sign in </Typography>
-                <Avatar className={classes.avatar}></Avatar>
+                <Link to="/signin">
+                <Button variant='outlined'>
+                    <Typography>Sign in </Typography>
+                    <Avatar className={classes.avatar}></Avatar>
+                </Button>
+                </Link>
             </div>
         </Toolbar>
     )
@@ -62,7 +81,12 @@ const Header = () => {
             <SearchIcon/>
         </div>
         <div className = {classes.right} >
-            <Typography>Sign in </Typography>
+            <Typography variant="h6" color="textPrimary" component="p">
+                Hello {user ? user.name: "Guest"}
+            </Typography>
+            <Button variant="outlined" onClick={handleAuth}>
+            <strong>{user ? "Sign Out" : "Sign In" } </strong>
+            </Button>
             <Avatar className={classes.avatar}></Avatar>
         </div>
         
