@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { auth } from "./firebase";
 import {useStateValue} from "./StateProvider"
 import Checkout from "./components/CheckOutForm/Checkout";
+import {actionTypes} from "./reducer"
+
 function App() {
   const [{user}, dispatch] = useStateValue();
 

@@ -6,7 +6,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import zIndex from '@material-ui/core/styles/zIndex';
 import {Link} from "react-router-dom"
 import {useStateValue} from "../StateProvider"
-import {useNavigate} from "rect-router-dom"
+import {useNavigate} from "react-router-dom"
+import {auth} from '../firebase'
+import {actionTypes} from "../reducer"
 
 
 const Header = () => {
@@ -14,7 +16,7 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const classes = useStyle(); 
   const [{user}, dispatch] = useStateValue();
-  history=useNavigate();
+  const history=useNavigate();
 
   const handleAuth = () =>{
     if(user){

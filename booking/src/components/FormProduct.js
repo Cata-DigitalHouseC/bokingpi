@@ -1,13 +1,48 @@
-import { FormControl, Modal } from '@material-ui/core'
+import { Button, FormControl, Modal } from '@material-ui/core'
 import React from 'react'
 import mockStates from '../mockStates'
 import mockCities from '../mockCities'
 import mockCategories  from '../mockCategories'
+import mockProducts from '../mockProduct'
+import mockAddress from '../mockAddress'
 
 
 const FormProduct = () => {
   const [stateSelected, setStateSelected]=useSate(1);
   const [stateIdSelected, setStateIdSelected]=useSate(1);
+  const [product, setProduct] = useState({
+    id_product: mockProducts.length,
+    url_image: "",
+    name:"",
+    description:"",
+    price:0,
+    availability:0,
+    category_id:"",
+    notAvailableStart: "",
+    notAvailableEnd: "",
+    address_id:""
+    })
+
+    const [address, setAddress] = useState({
+        address_id:mockAddress.length,
+        street:"",
+        number:"",
+        city_id:""
+        })
+
+        const handleSubmitAddress = (e) =>{
+            e.preventDefault();
+            address.city=cityIdSelected;
+            mockAddress.concat(address)
+        }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        product.address_id=mockAddress.length;
+        product.category_id = categoryIdSelected;
+        mockProducts.concat(product)
+    }
+
   const changeRadioState= e=>{
     setStateSelected(e.taget.value);
   }
@@ -24,10 +59,20 @@ const FormProduct = () => {
   .filter((city)=>city.name==citySelected)
   .map((city)=>setCityIdSelected(city.id_city));
 
+  const [categorySelected, setCategorySelected]=useSate(1);
+  const [categoryIdSelected, setCategoryIdSelected]=useSate(1);
+  const changeRadioCategory= e=>{
+    setCategorySelected(e.taget.value);
+  }
+  mockCategories
+  .filter((cat)=>cat.title==categorySelected)
+  .map((cat)=>setCategoryIdSelected(cat.id_category));
+
+
   return (
     <FormControl>
-        <TextField required id="standard-required" label="Name" defaultValue="name..." variant="standard" />
-        <TextField required id="standard-required" label="Description" defaultValue="description...." variant="standard" />
+        <TextField required id="standard-required" label="name" defaultValue="name..." variant="standard" onChange={(e)=>setProduct({...product,name:e.target.valkue})}/>
+        <TextField required id="standard-required" label="description" defaultValue="description...." variant="standard" onChange={(e)=>setProduct({...product,description:e.target.valkue})}/>
 
         <Button onClick={handleOpen}>Fill in Address</Button>
         <Modal
@@ -42,8 +87,8 @@ const FormProduct = () => {
             Please, fill in the following information
             </p>
             <FormControl>
-            <TextField required id="standard-required" label="Street" defaultValue="Street...." variant="standard" />
-            <TextField required id="standard-required" label="Number" defaultValue="Number...." variant="standard" />
+            <TextField required id="standard-required" label="street" defaultValue="Street...." variant="standard" onChange={(e)=>setAddress({...address,street:e.target.value})}/>
+            <TextField required id="standard-required" label="number" defaultValue="Number...." variant="standard" onChange={(e)=>setAddress({...address,number:e.target.value})}/>
             </FormControl>
             <ChildModal>
             <FormControl>
@@ -83,6 +128,7 @@ const FormProduct = () => {
                 </RadioGroup>
                 </FormControl>
             </ChildModal>
+            <Button type="Submit" variant="outlined" onSubmit={handleSubmitAddress}>Confirm Address</Button>
         </Box>
         </Modal>
         
@@ -95,7 +141,7 @@ const FormProduct = () => {
             <FormControlLabel value="selected" disabled  control={<Radio />} label="None" />
             {
             mockCategories.map((cat)=>{
-                return <FormControlLabel value={cat.title} control={<Radio />} label={cat.title} />
+                return <FormControlLabel value={cat.title} control={<Radio />} label={cat.title} onChange={changeCategory}/>
             })
             }
             
@@ -112,8 +158,10 @@ const FormProduct = () => {
         <label htmlFor="raised-button-file">
         <Button variant="raised" component="span" className={classes.button}>
                 Upload
-            </Button>
-            </label> 
+        </Button>
+        </label> 
+
+        <Button type="Submit" variant="outlined" onSubmit={handleSubmit}>Agregar Producto</Button>
         </FormControl>
   )
 }
